@@ -1,6 +1,6 @@
-Operating Systems Course for NTUA.
+Advanced Computer Architecture cource for NTUA.
 
-[Course website] http://www.cslab.ece.ntua.gr/courses/os/
+[Course website] http://cslab.ece.ntua.gr/courses/advcomparch/
 
 ## LICENSE
 

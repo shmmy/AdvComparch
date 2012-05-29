@@ -1,10 +1,3 @@
-/* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
- * File Name : btb.cpp
- * Creation Date : 19-05-2012
- * Last Modified : Sat 19 May 2012 09:02:50 PM EEST
- * Created By : Greg Liras <gregliras@gmail.com>
- _._._._._._._._._._._._._._._._._._._._._.*/
-
 #include "btb.h"
 
 

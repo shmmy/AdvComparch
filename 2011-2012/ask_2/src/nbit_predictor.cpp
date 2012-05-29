@@ -1,13 +1,10 @@
-/* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
- * File Name : nbit_predictor.cpp
- * Creation Date : 15-05-2012
- * Last Modified : Tue 15 May 2012 05:25:25 PM EEST
- * Created By : Greg Liras <gregliras@gmail.com>
- _._._._._._._._._._._._._._._._._._._._._.*/
 #include "nbit_predictor.h"
 
-nbit_predictor::nbit_predictor (int length) :N_COUNTER_LENGTH(length)
+nbit_predictor::nbit_predictor (int length, int nbpbits)
 {
+	N_COUNTER_LENGTH = length;
+	NBP_TABLE_BITS = nbpbits;
+    tab = new unsigned char[1<<NBP_TABLE_BITS];
     memset (tab, 0, sizeof (tab));
     counter_limit = ((int) pow(2.0, N_COUNTER_LENGTH)) - 1;
 }

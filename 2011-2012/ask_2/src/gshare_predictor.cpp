@@ -1,15 +1,11 @@
-/* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
-* File Name : gshare_predictor.cpp
-* Creation Date : 20-05-2012
-* Last Modified : Sun 20 May 2012 03:34:58 PM EEST
-* Created By : Greg Liras <gregliras@gmail.com>
-_._._._._._._._._._._._._._._._._._._._._.*/
-
 #include "gshare_predictor.h"
-#include <algorithm>
-gshare_predictor::gshare_predictor (void) : history(0)
+#include <cstring>
+
+gshare_predictor::gshare_predictor (int hist_length)
 {
-    std::fill (tab, tab+sizeof (tab),0);
+	history = 0;
+	history_length = hist_length;
+	memset(tab, 0, sizeof tab);
 }
 branch_update *gshare_predictor::predict (branch_info & b)
 {
@@ -22,7 +18,7 @@ branch_update *gshare_predictor::predict (branch_info & b)
 
     if (b.br_flags & BR_CONDITIONAL) {
         u.index =
-            (history << (GSP_TABLE_BITS - HISTORY_LENGTH))
+            (history << (GSP_TABLE_BITS - history_length))
             ^ (b.address & ((1<<GSP_TABLE_BITS)-1));
         u.direction_prediction (tab[u.index] >> 1);
     } else {
@@ -46,7 +42,7 @@ void gshare_predictor::update (branch_update *u, bool taken, unsigned int target
         }
         history <<= 1;
         history |= taken;
-        history &= (1<<HISTORY_LENGTH)-1;
+        history &= (1<<history_length)-1;
     }
 }
 

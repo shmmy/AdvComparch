@@ -1,0 +1,51 @@
+--- ../local/src/trace.cc	2010-03-19 14:18:14.000000000 +0200
++++ trace.cc	2012-05-15 16:39:57.090696161 +0300
+@@ -419,9 +419,10 @@
+ #define BZIP2_MAGIC	"BZ"
+ 
+ void init_trace (char *fname) {
+-	char *dc;
++	//char *dc;
+ 	char s[2] = { 0, 0 };
+ 	char cmd[1000];
++    int red;
+ 
+ 	// figure out the compression method from the magic number
+ 
+@@ -429,18 +430,28 @@
+ 	if (!f) {
+ 		perror (fname);
+ 	}
+-	fread (s, 1, 2, f);
++    
++	red = fread (s, 1, 2, f);
++    if ( red != 1*2 ) {
++		perror ("failed to read");
++    }
+ 	fclose (f);
+-	if (strncmp (s, GZIP_MAGIC, 2) == 0) 
+-		dc = ZCAT;
+-	else if (strncmp (s, BZIP2_MAGIC, 2) == 0)
+-		dc = BZCAT;
+-	else
+-		dc = CAT;
++	if (strncmp (s, GZIP_MAGIC, 2) == 0) {
++	    sprintf (cmd, "%s %s", ZCAT, fname);
++		//dc = ZCAT;
++    }
++	else if (strncmp (s, BZIP2_MAGIC, 2) == 0) {
++	    sprintf (cmd, "%s %s", BZCAT, fname);
++		//dc = BZCAT;
++    }
++	else {
++	    sprintf (cmd, "%s %s", CAT, fname);
++		//dc = CAT;
++    }
+ 
+ 	// make a command that will decompress the file to stdout
+ 
+-	sprintf (cmd, "%s %s", dc, fname);
++	//sprintf (cmd, "%s %s", ZCAT, fname);
+ 
+ 	// pipe that stdout to tracefp
+ 

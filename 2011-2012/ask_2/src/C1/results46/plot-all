@@ -1,0 +1,28 @@
+#!/bin/bash
+
+t1=`echo $1 | cut -d. -f2`
+t2=`echo $2 | cut -d. -f2`
+t3=`echo $3 | cut -d. -f2`
+t4=`echo $4 | cut -d. -f2`
+t5=`echo $5 | cut -d. -f2`
+t6=`echo $6 | cut -d. -f2`
+
+gnuplot << EOF
+set terminal png size 1024, 1024
+set output "results_C1.png"
+set title "predictor showdown"
+set key right outside top
+set grid
+set x2tics rotate by 30
+set x2tics ("N-T" 1, "BTFNT" 2, "4-bit" 3, "G-SH" 4, "L-H 2048x8" 5, "L-H 4096x4" 6, "G-H 2,4" 7, "G-H 2,8" 8, "G-H 4,4" 9, "G-H 4,8" 10, "hybrid" 11)
+set xtics 1,1,11
+set ylabel "MPKI"
+
+plot "$1" lc 1 title '$t1' ,"$1" with lines lc 1 notitle ,\
+     "$2" lc 2 title '$t2' ,"$2" with lines lc 2 notitle ,\
+     "$3" lc 3 title '$t3' ,"$3" with lines lc 3 notitle ,\
+     "$4" lc 4 title '$t4' ,"$4" with lines lc 4 notitle ,\
+     "$5" lc 5 title '$t5' ,"$5" with lines lc 5 notitle ,\
+     "$6" lc 6 title '$t6' ,"$6" with lines lc 6 notitle 
+EOF
+
